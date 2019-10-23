@@ -1,0 +1,21 @@
+.main{
+    background-color: #efefef;
+}
+.context-form{
+    background-color: white;
+    margin: 30px;
+}
+.context-form-margin{
+    margin: 30px;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
+.img_size{
+    height: 40px;
+    width: 40px;
+}
+.question .bianji{
+    font-size: 12px;
+}

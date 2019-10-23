@@ -1,1 +1,21 @@
-
+##服务器端口
+server:
+  port: 8080
+##静态资源
+github:
+  client:
+    id:  Iv1.129e209f083c3568
+    secret: 264efeef6f7e6615756c84f64b0775a72ba77ed2
+  redirect:
+    uri: http://localhost:8080/callback
+##配置数据库连接
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/user?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+## mybatis配置
+mybatis:
+  config-location: classpath:mybatis/mybatis_config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
