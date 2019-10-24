@@ -23,12 +23,9 @@ public class UserService {
         UserExample userExample=new UserExample();
         userExample.createCriteria().andAccountIdEqualTo(gitHubUser.getId());
         List<User> list=userMapper.selectByExample(userExample);
-        if (list.size()==0){
-            return;
-        }
-        User dbuser = list.get(0);
         String token= UUID.randomUUID().toString();
-        if (dbuser==null){
+        if (list.size()==0){
+            //插入信息
             User user=new User();
             user.setAccountId(gitHubUser.getId());
             user.setName(gitHubUser.getName());
@@ -38,16 +35,16 @@ public class UserService {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-        }else{
+        }else {
             //更新用户信息
+            User dbUser = list.get(0);
             User updateUser=new User();
             updateUser.setToken(token);
             updateUser.setBio(gitHubUser.getBio());
             updateUser.setName(gitHubUser.getName());
             updateUser.setGmtModified(System.currentTimeMillis());
-
             UserExample userUpdate=new UserExample();
-            userUpdate.createCriteria().andIdEqualTo(dbuser.getId());
+            userUpdate.createCriteria().andIdEqualTo(dbUser.getId());
 
             userMapper.updateByExampleSelective(updateUser,userUpdate);
         }

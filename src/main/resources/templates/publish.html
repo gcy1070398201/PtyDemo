@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>社区问答</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/communt.css">
+
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body class="main">
+<div th:insert="titleNav :: titleBar"></div>
+<div class="container-fluid ">
+    <div class="row context-form">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+            <form action="/publish" method="post">
+                <h3><span class="glyphicon glyphicon-plus" aria-hidden="true">发起</span></h3>
+                <hr>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">问题标题（简单扼要）:</label>
+                    <input type="text" class="form-control" name="title" id="exampleInputEmail1"
+                           th:value="${title}" placeholder="问题标题....">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">问题内容:</label>
+                    <textarea  class="form-control" rows="7" name="describe" placeholder="请描述问题..."
+                               th:value="${description}"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">添加标签:</label>
+                    <input type="text" class="form-control" name="label" id="exampleInputPassword1"
+                           placeholder="请输入标签，用,号分割" th:value="${label}">
+                </div>
+                <button type="submit" class="btn btn-success btn-publish">发布</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3> 问题发起指南</h3>
+            • 问题标题: 请用精简的语言描述您发布的问题，不超过25字<br>
+            • 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<br>
+            • 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>社区问答</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/communt.css">
+
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body class="main">
+<div th:insert="titleNav :: titleBar"></div>
+<div class="container-fluid ">
+    <div class="row context-form">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+            <h5 th:text="${publishDto.getTitle()}"></h5>
+            作者: <span th:text="${publishDto.getUser().getName()}"></span> |
+            发布时间: <span th:text="${#dates.format(publishDto.getGmtCreate(), 'yyyy-MM-dd ')}"></span> |
+            阅读数: <span th:text="${publishDto.getViewCount()}"></span>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                 <span th:text="${publishDto.getDescribeText()}"></span>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a th:href="@{'/publish/'+${publishDto.getId()}}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+               th:if="${session.user!=null && publishDto.getCreatId()==publishDto.getUser().getId()}">
+                <span  class="glyphicon glyphicon-pencil question bianji" aria-hidden="true"> 编辑</span>
+                <hr>
+            </a>
+
+
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h5>发起人</h5>
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img_size img-rounded" th:src="@{${publishDto.getUser().getAvatarUrl()}}"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${publishDto.getUser().getName()}"></h4>
+                </div>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h5>码问官方公众号</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

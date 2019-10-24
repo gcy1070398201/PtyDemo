@@ -3,6 +3,7 @@ package com.example.pty.service;
 import com.example.pty.dto.PubLishListDto;
 import com.example.pty.dto.PublishDto;
 import com.example.pty.mapper.PublishMapper;
+import com.example.pty.mapper.PublishExtMapper;
 import com.example.pty.mode.Publish;
 import com.example.pty.mode.PublishExample;
 import com.example.pty.mode.User;
@@ -22,6 +23,8 @@ public class PublishService {
 
     @Autowired
     UserService userService;
+    @Autowired
+    PublishExtMapper publishExtMapper;
 
     public PubLishListDto select(Integer page, Integer size) {
         if (page<=0)page=1;
@@ -64,5 +67,86 @@ public class PublishService {
         }
         pubLishListDto.setPublishDtos(publishDtos);
         return pubLishListDto;
+    }
+
+    /**
+     * 更新或者插入数据
+     * @param publishMode
+     */
+    public void createOrUpdate(Publish publishMode) {
+
+        if (publishMode.getId()==null){
+            //新增数据
+            publishMode.setGmtCreate(System.currentTimeMillis());
+            publishMode.setGmtModified(publishMode.getGmtCreate());
+            publishMode.setViewCount(0);
+            publishMode.setReplyCount(0);
+            publishMapper.insert(publishMode);
+        }else{
+            //更新数据
+            Publish publishDb = publishMapper.selectByPrimaryKey(publishMode.getId());
+            if (publishDb==null){
+               //                不存在
+                return;
+            }
+            if (publishDb.getCreatId()!=publishMode.getCreatId()){
+                //                不存在
+                return;
+            }
+            Publish updateQuestion=new Publish();
+            updateQuestion.setTitle(publishMode.getTitle());
+            updateQuestion.setGmtModified(System.currentTimeMillis());
+            updateQuestion.setDescribeText(publishMode.getDescribeText());
+            updateQuestion.setLabel(publishMode.getLabel());
+            updateQuestion.setGmtModified(updateQuestion.getGmtCreate());
+            PublishExample publishExample = new PublishExample();
+            publishExample.createCriteria().andIdEqualTo(publishMode.getId());
+            int i = publishMapper.updateByExampleSelective(updateQuestion, new PublishExample());
+            if (i!=0){
+                //更新失败
+            }
+        }
+
+    }
+
+    /**
+     * 根据ID 获取信息
+     * @param id
+     * @return
+     */
+    public Publish selectById(Long id) {
+        Publish publish = publishMapper.selectByPrimaryKey(id);
+        if (publish==null){
+            //信息不存在
+        }
+        return publish;
+    }
+
+    /**
+     * 增加游览次数
+     * @param id
+     */
+    public void incView(Long id) {
+        Publish publishMode = new Publish();
+        publishMode.setId(id);
+        publishMode.setViewCount(1);
+        publishExtMapper.incView(publishMode);
+    }
+
+    /**
+     * 获取列表信息 和用户信息 并组装
+     * @param id
+     * @return
+     */
+    public PublishDto getById(Long id) {
+        Publish publish = publishMapper.selectByPrimaryKey(id);
+        if (publish == null) {
+          //不为空
+        }
+        PublishDto publishDto=new PublishDto();
+        BeanUtils.copyProperties(publish, publishDto);
+        User userdb = userService.findUserId(publish.getCreatId());
+        publishDto.setUser(userdb);
+        return publishDto;
     }
 }

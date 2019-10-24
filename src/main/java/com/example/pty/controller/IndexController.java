@@ -17,7 +17,7 @@ public class IndexController {
     @Autowired
     PublishService publishService;
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String index(HttpServletRequest request,
                         Model model,
                         @RequestParam(value = "page",defaultValue = "1") Integer page,
