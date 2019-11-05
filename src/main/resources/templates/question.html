@@ -14,19 +14,20 @@
 <div th:insert="titleNav :: titleBar"></div>
 <div class="container-fluid ">
     <div class="row context-form">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h5 th:text="${publishDto.getTitle()}"></h5>
             作者: <span th:text="${publishDto.getUser().getName()}"></span> |
             发布时间: <span th:text="${#dates.format(publishDto.getGmtCreate(), 'yyyy-MM-dd ')}"></span> |
             阅读数: <span th:text="${publishDto.getViewCount()}"></span>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                 <span th:text="${publishDto.getDescribeText()}"></span>
+                <span th:text="${publishDto.getDescribeText()}"></span>
             </div>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
             <a th:href="@{'/publish/'+${publishDto.getId()}}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-               th:if="${session.user!=null && publishDto.getCreatId()==publishDto.getUser().getId()}">
-                <span  class="glyphicon glyphicon-pencil question bianji" aria-hidden="true"> 编辑</span>
+               th:if="${session.user!=null && session.user.getId()==publishDto.getUser().getId()}">
+                <span class="glyphicon glyphicon-pencil question bianji" aria-hidden="true"> 编辑</span>
                 <hr>
             </a>
 
@@ -38,7 +39,8 @@
                 <h5>发起人</h5>
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img_size img-rounded" th:src="@{${publishDto.getUser().getAvatarUrl()}}"/>
+                        <img class="media-object img_size img-rounded"
+                             th:src="@{${publishDto.getUser().getAvatarUrl()}}"/>
                     </a>
                 </div>
                 <div class="media-body">
