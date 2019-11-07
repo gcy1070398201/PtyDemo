@@ -16,6 +16,7 @@
     <div class="row context-form">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
             <form action="/publish" method="post">
+                <input type="hidden" name="id" th:value="${id}">
                 <h3><span class="glyphicon glyphicon-plus" aria-hidden="true">发起</span></h3>
                 <hr>
                 <div class="form-group">
@@ -26,14 +27,29 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">问题内容:</label>
                     <textarea  class="form-control" rows="7" name="describe" placeholder="请描述问题..."
-                               th:value="${description}"></textarea>
+                               th:text="${description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">添加标签:</label>
                     <input type="text" class="form-control" name="label" id="exampleInputPassword1"
                            placeholder="请输入标签，用,号分割" th:value="${label}">
                 </div>
-                <button type="submit" class="btn btn-success btn-publish">发布</button>
+
+                <div class="container-fluid context-form ">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                 th:text="${error}"
+                                 th:if="${error != null}">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-success btn-publish ">
+                                发布
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
 

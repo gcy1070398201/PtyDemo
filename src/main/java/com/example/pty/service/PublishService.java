@@ -89,7 +89,7 @@ public class PublishService {
                //                不存在
                 return;
             }
-            if (publishDb.getCreatId()!=publishMode.getCreatId()){
+            if (publishDb.getCreatId().longValue()!=publishMode.getCreatId().longValue()){
                 //                不存在
                 return;
             }
@@ -101,8 +101,8 @@ public class PublishService {
             updateQuestion.setGmtModified(updateQuestion.getGmtCreate());
             PublishExample publishExample = new PublishExample();
             publishExample.createCriteria().andIdEqualTo(publishMode.getId());
-            int i = publishMapper.updateByExampleSelective(updateQuestion, new PublishExample());
-            if (i!=0){
+            int i = publishMapper.updateByExampleSelective(updateQuestion, publishExample);
+            if (i!=1){
                 //更新失败
             }
         }
